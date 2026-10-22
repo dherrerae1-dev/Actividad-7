@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caja Registradora - Restaurante</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Librería Dexie.js para IndexedDB -->
+  <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+</head>
+<body>
+
+  <div class="contenedor">
+    <h2>🍽️ Sistema de Restaurante 🍕</h2>
+
+    <!-- Navegación por Pestañas (Independización de opciones) -->
+    <div class="tabs-navegacion">
+      <button type="button" class="btn-tab activo" id="tabBtnPedido">Nuevo Pedido</button>
+      <button type="button" class="btn-tab" id="tabBtnHistorial">Gestión y Historial</button>
+    </div>
+
+    <!-- VISTA 1: CREAR PEDIDO -->
+    <div id="vistaPedido" class="vista-seccion activo">
+      <form id="formularioRestaurante">
+        <div class="seccion">
+          <label for="platoPrincipal">Elige tu plato principal:</label>
+          <select id="platoPrincipal" required>
+            <option value="pizza">Pizza Familiar — $12.00</option>
+            <option value="hamburguesa">Hamburguesa con Queso — $7.50</option>
+          </select>
+        </div>
+
+        <div class="seccion">
+          <label>Tamaño de la Bebida:</label>
+          <div class="opciones-inline">
+            <label><input type="radio" name="tamanoBebida" value="pequena" checked> Pequeña (+$1.00)</label>
+            <label><input type="radio" name="tamanoBebida" value="mediana"> Mediana (+$1.50)</label>
+            <label><input type="radio" name="tamanoBebida" value="grande"> Grande (+$2.00)</label>
+          </div>
+        </div>
+
+        <div class="seccion">
+          <label>¿Deseas agregar extras?</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="extraPapas" value="papas">
+              <label for="extraPapas">Papas Fritas (+$2.50)</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="extraHelado" value="helado">
+              <label for="extraHelado">Helado de Vainilla (+$1.80)</label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-principal">Registrar Pedido en Base de Datos</button>
+      </form>
+
+      <!-- Recibo del pedido actual -->
+      <div id="reciboRespuesta"></div>
+    </div>
+
+    <!-- VISTA 2: GESTIÓN E HISTORIAL (Apartado Independiente) -->
+    <div id="vistaHistorial" class="vista-seccion">
+      <div class="panel-admin">
+        <h3>📊 Administración y Ventas Guardadas</h3>
+        
+        <!-- Buscador en tiempo real -->
+        <div class="seccion-busqueda">
+          <input type="text" id="inputBuscar" placeholder="🔍 Buscar por plato, bebida o fecha...">
+        </div>
+
+        <!-- Botón de Limpiar Base de Datos reubicado dentro de su apartado -->
+        <div class="contenedor-btn-limpiar">
+          <button type="button" id="btnBorrarHistorial" class="btn-rojo">🗑️ Limpiar Toda la Base de Datos</button>
+        </div>
+
+        <!-- Lista del historial de IndexedDB -->
+        <div id="tablaHistorial"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="action.js"></script>
+</body>
+</html>
